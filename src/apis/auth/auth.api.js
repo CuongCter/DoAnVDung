@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { axiosPrivate } from '../configHttp'
 import { toast } from 'react-toastify'
 

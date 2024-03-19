@@ -22,8 +22,6 @@ const Login = () => {
 
     const navigate = useNavigate()
     async function handleSubmitLogin() {
-        // http://20.210.177.113:3333/api/v1/auth/login
-        //
         postLogin(email, password).then((data) => {
             console.log(data)
             // console.log(data.data.user)
