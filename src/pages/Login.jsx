@@ -41,9 +41,9 @@ const Login = () => {
                 localStorage.setItem('accessToken', accessToken)
                 navigate('/', { replace: true })
                 toast.success("Đăng nhập thành công!")
-                // storageService.set('id', data.data.user.id)
-                // storageService.set('email', data.data.user.email)
-                // storageService.set('name', data.data.user.fullName)
+                storageService.set('id', data.data.user.id)
+                storageService.set('email', data.data.user.email)
+                storageService.set('name', data.data.user.username)
             // }
         })
     }

@@ -26,110 +26,114 @@ const Product = () => {
   const [search, setSearch] = useState("");
   const [count, setCount] = useState(12);
   const [post, setPost] = useState([]);
+  const [products, setProducts] = useState([])
+  // const handleSearchProduct = (e) => {
+  //   setSearch(e.target.value);
+  // };
 
-  const handleSearchProduct = (e) => {
-    setSearch(e.target.value);
-    // console.log(e.target.value);
-  };
+  // const searchDebounce = useDebounce(search, 800);
 
-  const searchDebounce = useDebounce(search, 800);
-
-  const [url, setUrl] = useState(
-    // `https://dummyjson.com/products${categories}?limit=12&skip=${skip}`
-    `${API}/products?page=${skip}&size=12`
-  );
-  // useEffect(()=>{
-  //   setUrl(skip)
-  // },[])
-    useEffect(()=>{
-      setUrl(`${API}/products?page=${skip}&size=12`)
-    },)
-  const { data } = useSWR(url, fetcher);
+  // const [url, setUrl] = useState(`${API}/products`);
+  // useEffect(() => {
+  //   setUrl(`${API}/products`);
+  // },[data]);
+  // const { data } = useSWR(url, fetcher);
+  
   useEffect(() => {
-    if (searchDebounce) {
-      try {
-        async function fetchData() {
-          const res = await axios.post(`${API}/products/search?name=${searchDebounce}`)
-          setPost(res.data.data.productOutputs)
-        }
-        fetchData();
-      }catch{
-        console.log('err');
-      }
-    } 
-    if(!searchDebounce) {
-      try {
-        async function fetchData() {
-          const res = await axios.post(`${API}/products/search${categories ? `?category=${categories}` : "?"}&page=${skip}&size=12`)
-          setPost(res.data.data.productOutputs)
-          
-        }
-        fetchData();
-      }
-      catch {
-        console.log('err');
-      }
+    const fetchData = async () => {
+      const res = await axios.get(`${API}/products`);
+      setProducts(res.data.data.products)
+      console.log(res.data.data.products);
     }
-    
-  }, [categories, searchDebounce, skip]);
+    fetchData()
+  },[])
 
-  if (!data) return;
-  const product =  categories ? post : searchDebounce  ? post : data?.data.productOutputs;
+  // console.log(data.data.products);
+  // const products = data.data.products
+  // useEffect(() => {
+  //   if (searchDebounce) {
+  //     try {
+  //       async function fetchData() {
+  //         const res = await axios.post(`${API}/products/search?name=${searchDebounce}`)
+  //         setPost(res.data.data.productOutputs)
+  //       }
+  //       fetchData();
+  //     }catch{
+  //       console.log('err');
+  //     }
+  //   }
+  //   if(!searchDebounce) {
+  //     try {
+  //       async function fetchData() {
+  //         const res = await axios.post(`${API}/products/search${categories ? `?category=${categories}` : "?"}&page=${skip}&size=12`)
+  //         setPost(res.data.data.productOutputs)
 
-  const pageCount = Math.ceil(data?.data.meta.total / itemsPerPage);
+  //       }
+  //       fetchData();
+  //     }
+  //     catch {
+  //       console.log('err');
+  //     }
+  //   }
 
-  const handleGetProductCategories = (e) => {
-    setGetCategories(e.target.textContent);
-    // console.log(e.target.textContent);
-    setCategories(`${e.target.textContent}`);
-    setShowCategorySelect(e.target.textContent);
-    setSkip(0);
+  // }, [categories, searchDebounce, skip]);
 
-  };
+  // if (!data) return;
+  // const product =  categories ? post : searchDebounce  ? post : data?.data.productOutputs;
 
-  const handleResetSort = () => {
-    setCategories("");
-    setShowCategorySelect("All Categories");
-  };
+  // const pageCount = Math.ceil(data?.data.meta.total / itemsPerPage);
 
-  const handleChangeSort = (e) => {
-    const value = e.target.textContent;
-    if (value === "Mặc định") {
-      setSortName(false);
-      setSortNameReverse(false);
-      setSortPrice(false);
-      setSortPriceReverse(false);
-      setSortDefault(true);
-    }
-    if (value === "Name - A to Z") {
-      setSortName(true);
-      setSortNameReverse(false);
-      setSortPrice(false);
-      setSortPriceReverse(false);
-      setSortDefault(false);
-    }
-    if (value === "Name - Z to A") {
-      setSortNameReverse(true);
-      setSortName(false);
-      setSortPrice(false);
-      setSortPriceReverse(false);
-      setSortDefault(false);
-    }
-    if (value === "Price - Low to High") {
-      setSortPrice(true);
-      setSortName(false);
-      setSortNameReverse(false);
-      setSortPriceReverse(false);
-      setSortDefault(false);
-    }
-    if (value === "Price - High to Low") {
-      setSortPriceReverse(true);
-      setSortName(false);
-      setSortNameReverse(false);
-      setSortPrice(false);
-      setSortDefault(false);
-    }
-  };
+  // const handleGetProductCategories = (e) => {
+  //   setGetCategories(e.target.textContent);;
+  //   setCategories(`${e.target.textContent}`);
+  //   setShowCategorySelect(e.target.textContent);
+  //   setSkip(0);
+
+  // };
+
+  // const handleResetSort = () => {
+  //   setCategories("");
+  //   setShowCategorySelect("All Categories");
+  // };
+
+  // const handleChangeSort = (e) => {
+  //   const value = e.target.textContent;
+  //   if (value === "Mặc định") {
+  //     setSortName(false);
+  //     setSortNameReverse(false);
+  //     setSortPrice(false);
+  //     setSortPriceReverse(false);
+  //     setSortDefault(true);
+  //   }
+  //   if (value === "Name - A to Z") {
+  //     setSortName(true);
+  //     setSortNameReverse(false);
+  //     setSortPrice(false);
+  //     setSortPriceReverse(false);
+  //     setSortDefault(false);
+  //   }
+  //   if (value === "Name - Z to A") {
+  //     setSortNameReverse(true);
+  //     setSortName(false);
+  //     setSortPrice(false);
+  //     setSortPriceReverse(false);
+  //     setSortDefault(false);
+  //   }
+  //   if (value === "Price - Low to High") {
+  //     setSortPrice(true);
+  //     setSortName(false);
+  //     setSortNameReverse(false);
+  //     setSortPriceReverse(false);
+  //     setSortDefault(false);
+  //   }
+  //   if (value === "Price - High to Low") {
+  //     setSortPriceReverse(true);
+  //     setSortName(false);
+  //     setSortNameReverse(false);
+  //     setSortPrice(false);
+  //     setSortDefault(false);
+  //   }
+  // };
   const styleArrow = `flex gap-x-2 items-center justify-center font-semibold px-4 py-2 bg-white text-primary border border-primary hover:bg-primary hover:text-white transition-all rounded-lg`;
 
   return (
@@ -150,7 +154,7 @@ const Product = () => {
               value={search}
               placeholder="Enter your product..."
               className="w-full h-full text-sm text-text1 font-medium input-search"
-              onChange={handleSearchProduct}
+              // onChange={handleSearchProduct}
             />
           </div>
         </div>
@@ -158,9 +162,10 @@ const Product = () => {
 
         <div className="flex max-sm:flex-col-reverse sm:justify-between justify-start sm:items-center items-start gap-y-5">
           <div className="flex gap-x-10 items-top">
-            <CategoryShop onClick={handleGetProductCategories}></CategoryShop>
+            <CategoryShop
+            // onClick={handleGetProductCategories}
+            ></CategoryShop>
           </div>
-          {/* display on the screen 768px */}
           <div className=" flex items-center gap-x-5">
             <div className="max-md:hidden relative border rounded-md h-[38px] px-9 w-[400px] flex items-center search">
               <IconSearch
@@ -171,13 +176,16 @@ const Product = () => {
                 value={search}
                 placeholder="Enter your product..."
                 className="w-full h-full text-sm text-text1 font-medium input-search"
-                onChange={handleSearchProduct}
+                // onChange={handleSearchProduct}
               />
             </div>
-            <Sort onClick={handleChangeSort}></Sort>
+            {/* <Sort 
+            // onClick={handleChangeSort}
+            >
+
+            </Sort> */}
           </div>
           {/* ------------------------ */}
-
         </div>
         <div className="flex justify-between sm:gap-x-10 gap-5 text-sm text-dark md:pl-2 items-center mt-5 flex-wrap">
           <div className="flex gap-x-5">
@@ -189,31 +197,29 @@ const Product = () => {
             </div>
             <button
               className="rounded-md py-2 px-4 font-medium shadow-md"
-              onClick={handleResetSort}
+              // onClick={handleResetSort}
             >
               Reset
             </button>
           </div>
           <div className="flex lg:gap-x-10 gap-x-5">
-            <div className="font-semibold text-dark text-sm flex items-center gap-x-2 max-sm:hidden">
-            </div>
-            <div className="font-medium text-dark text-sm flex items-center">
+            <div className="font-semibold text-dark text-sm flex items-center gap-x-2 max-sm:hidden"></div>
+            {/* <div className="font-medium text-dark text-sm flex items-center">
               {search
                 ? ""
                 : `Showing ${data?.data.productOutputs.length === 0 ? "0" : (skip) * count} - ${(skip) * count + itemsPerPage >= data?.data.meta.total
                   ? data?.data.meta.total
                   : (skip) * count + itemsPerPage
                 } of ${data?.data.meta.total} results`}
-              {/* {console.log(data?.data.productOutputs.length)} */}
-              {/* {console.log(data.data.meta.total)} */}
-              {/* {console.log(skip)}
-                {console.log(count * skip)} */}
-            </div>
+            </div> */}
           </div>
         </div>
-
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 sm:gap-x-6 gap-x-4 gap-y-8 mt-10 list-product">
-          {sortDefault &&
+        
+         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 sm:gap-x-6 gap-x-4 gap-y-8 mt-10 list-product">
+          {
+          products.map((item) => <Card key={item.id} item={item}></Card>)
+          } 
+          {/* {sortDefault &&
             product.map((item) => <Card key={item.id} item={item}></Card>)}
           {sortName &&
             product
@@ -246,14 +252,14 @@ const Product = () => {
                 if (a.price > b.price) return -1;
                 return 0;
               })
-              .map((item) => <Card key={item.id} item={item}></Card>)}
+              .map((item) => <Card key={item.id} item={item}></Card>)} */}
         </div>
-        {data?.data.productOutputs.length === 0 && (
+        {/* {data?.data.productOutputs.length === 0 && (
           <h3 className="text-center text-[30px] text-dark font-semibold">
             No Products Found
           </h3>
-        )}
-        {data?.data.meta.total < 12 || search ? (
+        )}  */}
+        {/* {data?.data.meta.total < 12 || search ? (
           ""
         ) : (
           <div className="w-full rounded-[30px] mt-10 flex items-center justify-between gap-x-3 relative showPageCount">
@@ -304,7 +310,7 @@ const Product = () => {
               )}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

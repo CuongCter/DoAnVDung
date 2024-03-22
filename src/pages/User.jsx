@@ -18,11 +18,10 @@ const User = () => {
     useEffect(() => {
         async function fetchData() {
             const result = await axios.get(`${API}/users/${id}`);
-            setUser(result.data.data);
-            // console.log(result.data.data);
+            // setUser(result.data.data);
+            console.log(result);
         }
         fetchData();
-        
     }, []);
     const [selectedFile, setSelectedFile] = useState(null);
     const [values, setValues] = useState({
@@ -118,21 +117,21 @@ const User = () => {
     }
     const [order, setOrder] = useState([])
     useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
-        const fetchOrder = async () => {
-            try {
-                const res = await axios.get(`${API}/orders/user/${id}`
-                    , {
-                        headers:
-                            { Authorization: `Bearer ${accessToken}` }
-                    })
-                // console.log(res.data.data);
-                setOrder(res.data.data)
-            } catch {
-                console.log('err');
-            }
-        }
-        fetchOrder()
+        // const accessToken = localStorage.getItem('accessToken');
+        // const fetchOrder = async () => {
+        //     try {
+        //         const res = await axios.get(`${API}/orders/user/${id}`
+        //             , {
+        //                 headers:
+        //                     { Authorization: `Bearer ${accessToken}` }
+        //             })
+        //         // console.log(res.data.data);
+        //         // setOrder(res.data.data)
+        //     } catch {
+        //         console.log('err');
+        //     }
+        // }
+        // fetchOrder()
     }, [])
 
     const [modelOrder, setModelOrder] = useState(false)
@@ -142,20 +141,20 @@ const User = () => {
         setIndexOrder(index)
         // console.log(dataOrder);
     }
-console.log(indexOrder);
+
     const [modelDeleteOrder, setModelDeleteOrder] =useState(false)
     const handleDeleteOrder = async ( ) =>{
-        setModelDeleteOrder(true)
+        // setModelDeleteOrder(true)
     }
     const handleDelete = async () =>{
-        try{
-            const res = await axios.delete(`${API}/orders/${idOrder}`, config)
-            toast.success('Hủy đơn thành công')
-            setModelDeleteOrder(false);
-            setModelOrder(false)
-        }catch{
-            console.log('err');
-        }
+        // try{
+        //     const res = await axios.delete(`${API}/orders/${idOrder}`, config)
+        //     toast.success('Hủy đơn thành công')
+        //     setModelDeleteOrder(false);
+        //     setModelOrder(false)
+        // }catch{
+        //     console.log('err');
+        // }
     }
 
     return (

@@ -27,7 +27,6 @@ const ShoppingCart = () => {
         // console.log(res.data);
         setCart(res.data.data.itemDetails[0].product)
         setidItemDetail(res.data.data.itemDetails)
-        // storageService.set('cart', JSON.stringify(res.data.data.itemDetails[0].product))
       }
       catch{
         console.log('err');

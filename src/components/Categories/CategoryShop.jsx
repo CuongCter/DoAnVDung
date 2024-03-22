@@ -6,28 +6,28 @@ import IconPlus from "../../icons/IconPlus";
 import { API } from "../../commom/const.api";
 const CategoryShop = ({ onClick = () => { } }) => {
   // const { data } = useSWR(`https://dummyjson.com/products/categories`, fetcher);
-  const { data } = useSWR(`${API}/categories`, fetcher);
+  // const { data } = useSWR(`${API}/categories`, fetcher);
   
-  const [showCategories, setShowCategories] = useState(false);
+  // const [showCategories, setShowCategories] = useState(false);
 
-  const handleShowCategories = () => {
-    setShowCategories(!showCategories);
-  };
+  // const handleShowCategories = () => {
+  //   setShowCategories(!showCategories);
+  // };
 
-  if (!data) return;
+  // if (!data) return;
 
   return (
     <div className="relative w-[200px]">
       <h3
         className=" w-full flex items-center justify-between border rounded-md px-5 py-2 text-sm font-semibold text-dark cursor-pointer"
-        onClick={handleShowCategories}
+        // onClick={handleShowCategories}
       >
         <span className="select-none">Categories</span>
-        <span>
+        {/* <span>
           {showCategories ? <IconMinus className={"w-4 h-4"}></IconMinus> : <IconPlus className={"w-4 h-4"}></IconPlus>}
-        </span>
+        </span> */}
       </h3>
-      {showCategories && (
+      {/* {showCategories && (
         <div className="absolute left-0 border w-full h-auto overflow-y-scroll mt-1 rounded-md bg-white z-10 py-3 categories-item">
           {data.data.length > 0 &&
             data.data.map((category, index) => (
@@ -39,7 +39,7 @@ const CategoryShop = ({ onClick = () => { } }) => {
               </p>
             ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
