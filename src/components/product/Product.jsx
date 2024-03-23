@@ -43,7 +43,6 @@ const Product = () => {
     const fetchData = async () => {
       const res = await axios.get(`${API}/products`);
       setProducts(res.data.data.products)
-      console.log(res.data.data.products);
     }
     fetchData()
   },[])
